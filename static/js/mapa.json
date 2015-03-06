@@ -1,0 +1,16 @@
+
+{
+	"mapwidth": "990",
+	"mapheight": "600",
+	"levels": [
+		{
+			"id": "ground",
+			"name": "0",
+			"title": "Mapa",
+			"map": "static/img/mapa/mapa_mini2.jpg",
+			"minimap": "static/img/mapa/thumb2.jpg",
+			"show": "true",
+			"locations": []
+		}
+	]
+}
