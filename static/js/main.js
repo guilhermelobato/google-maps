@@ -38,6 +38,80 @@ $(document).ready(function(){
 });
 
 /* 
+Função de geolocalização
+  ========================================================================== */
+
+
+      var map;
+
+      function initialize() {
+
+        // //define as opções iniciais do mapa
+        // var mapOptions = {
+        //   zoom: 14
+        // };
+        
+        //instacia um novo mapa
+        //map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+        // verifica se tem suporte a geolocalização
+        if(navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+
+            // pegando a latitude e longitude e definindo um elemento LatLng do maps
+            var pos = new google.maps.LatLng(position.coords.latitude,
+                                             position.coords.longitude);
+            console.log(pos);
+
+            // criando um marcador para o nosso map
+            var infowindow = new google.maps.InfoWindow({
+              map: map,
+              position: pos,
+              content: '<p>Voce está aqui.</p>'
+              
+            });
+           
+
+            //pede para o mapa centralizar
+            map.setCenter(pos);
+          }, function() {
+            //o Browser falhou no acesso a geolocalização
+            handleNoGeolocation(true);
+          });
+        } else {
+          // Browser não tem suporte a geolocalização
+          handleNoGeolocation(false);
+        }
+      }
+
+
+      function handleNoGeolocation(errorFlag) {
+        if (errorFlag) {
+          var content = 'Error: The Geolocation service failed.';
+        } else {
+          var content = 'Error: Your browser doesn\'t support geolocation.';
+        }
+        // caso falhe ele dá uma posição aleatória
+        var options = {
+
+          map: map,
+          position: new google.maps.LatLng(60, 105),
+          content: content
+        };
+
+        var infowindow = new google.maps.InfoWindow(options);
+        map.setCenter(options.position);
+      }
+
+      google.maps.event.addDomListener(window, 'load', initialize);
+
+
+
+
+
+
+
+/* 
 Função que calcula a rota
   ========================================================================== */
 function calcRoute() {
@@ -70,6 +144,8 @@ function calcRoute() {
 		document.getElementById('mapview').style.visibility = 'visible';
 	});
 }
+
+
 
 
 /* ==========================================================================
